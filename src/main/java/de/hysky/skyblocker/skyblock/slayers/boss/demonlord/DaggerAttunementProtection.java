@@ -4,9 +4,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Locale;
+import de.hysky.skyblocker.utils.Constants;
 
 
-import de.hysky.skyblocker.utils.scheduler.MessageScheduler;
 import de.hysky.skyblocker.annotations.Init;
 import de.hysky.skyblocker.config.SkyblockerConfigManager;
 import de.hysky.skyblocker.utils.Utils;
@@ -44,7 +44,7 @@ public class DaggerAttunementProtection {
 					String daggerAttunement = getDaggerAttunementFromLore(player, stack);
 
 					if (daggerAttunement != null && daggerAttunement.equals(bossAttunement)) {
-						MessageScheduler.INSTANCE.sendMessageAfterCooldown("§c[Skyblocker] Blocked attunement switch! Already matching " + daggerAttunement, false);
+						player.displayClientMessage(Constants.PREFIX.get().append("§c[Skyblocker] Blocked attunement switch! Already matching " + daggerAttunement), false);
 						return InteractionResult.FAIL;
 					}
 				}
