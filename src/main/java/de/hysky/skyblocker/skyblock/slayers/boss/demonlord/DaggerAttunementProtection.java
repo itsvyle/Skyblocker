@@ -3,6 +3,7 @@ package de.hysky.skyblocker.skyblock.slayers.boss.demonlord;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Locale;
 
 
 import de.hysky.skyblocker.utils.scheduler.MessageScheduler;
@@ -22,7 +23,7 @@ import net.minecraft.world.level.Level;
 
 public class DaggerAttunementProtection {
 	private static final Set<String> BLAZE_DAGGERS = Set.of("HEARTMAW_DAGGER", "BURSTMAW_DAGGER", "MAWDUST_DAGGER", "HEARTFIRE_DAGGER", "BURSTFIRE_DAGGER", "FIREDUST_DAGGER");
-	
+
 	private static final Pattern BOSS_ATTUNEMENT_PATTERN = Pattern.compile("ASHEN|SPIRIT|CRYSTAL|AURIC");
 	private static final Pattern LORE_ATTUNEMENT_PATTERN = Pattern.compile("Attuned:\\s*(ASHEN|SPIRIT|CRYSTAL|AURIC)", Pattern.CASE_INSENSITIVE);
 
@@ -43,7 +44,7 @@ public class DaggerAttunementProtection {
 					String daggerAttunement = getDaggerAttunementFromLore(player, stack);
 
 					if (daggerAttunement != null && daggerAttunement.equals(bossAttunement)) {
-                        MessageScheduler.INSTANCE.sendMessageAfterCooldown("§c[Skyblocker] Blocked attunement switch! Already matching " + daggerAttunement, false);
+						MessageScheduler.INSTANCE.sendMessageAfterCooldown("§c[Skyblocker] Blocked attunement switch! Already matching " + daggerAttunement, false);
 						return InteractionResult.FAIL;
 					}
 				}
@@ -58,10 +59,10 @@ public class DaggerAttunementProtection {
 	 */
 	private static String getDaggerAttunementFromLore(Player player, ItemStack stack) {
 		for (Component line : stack.getTooltipLines(Item.TooltipContext.EMPTY, player, TooltipFlag.NORMAL)) {
-			String plainLine = line.getString(); 
+			String plainLine = line.getString();
 			Matcher matcher = LORE_ATTUNEMENT_PATTERN.matcher(plainLine);
 			if (matcher.find()) {
-				return matcher.group(1).toUpperCase();
+				return matcher.group(1).toUpperCase(Locale.ENGLISH);
 			}
 		}
 		return null;
@@ -75,7 +76,7 @@ public class DaggerAttunementProtection {
 		for (ArmorStand armorStand : armorStands) {
 			Matcher matcher = BOSS_ATTUNEMENT_PATTERN.matcher(armorStand.getName().getString());
 			if (matcher.find()) {
-				return matcher.group(); 
+				return matcher.group();
 			}
 		}
 		return null;
