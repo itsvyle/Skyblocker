@@ -23,6 +23,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.monster.skeleton.WitherSkeleton;
+import net.minecraft.world.entity.monster.zombie.ZombifiedPiglin;
 
 
 public class DaggerAttunementProtection {
@@ -37,8 +39,12 @@ public class DaggerAttunementProtection {
 	}
 
 	private static InteractionResult onInteract(Player player, Level world, InteractionHand hand) {
-		if (world.isClientSide() && SkyblockerConfigManager.get().slayers.blazeSlayer.blockIncorrectDaggerSwitch && SlayerManager.isFightingSlayerType(SlayerType.DEMONLORD) && Utils.isInCrimson()) {
+		if (world.isClientSide() &&
+			SkyblockerConfigManager.get().slayers.blazeSlayer.blockIncorrectDaggerSwitch &&
+			SlayerManager.isFightingSlayerType(SlayerType.DEMONLORD) &&
+			Utils.isInCrimson()) {
 			// get the boss from the slayer manager, to get the entities we're looking for!
+			// I'm not sure exactly how it works though, so maybe look a bit more at the mob glow stuff
 			ItemStack stack = player.getItemInHand(hand);
 			String skyblockId = stack.getSkyblockId();
 
@@ -50,7 +56,7 @@ public class DaggerAttunementProtection {
 
 					if (daggerAttunement != null && daggerAttunement.equals(bossAttunement)) {
 						player.displayClientMessage(Constants.PREFIX.get().append("§c[Skyblocker] Blocked attunement switch! Already matching " + daggerAttunement), false);
-						player.playSound(SoundEvents.NOTE_BLOCK_PLING.value(), 100f, 0.1f);
+						player.playSound(SoundEvents.VILLAGER_NO, 100f, 0.1f);
 						return InteractionResult.FAIL;
 					}
 				}
@@ -78,13 +84,41 @@ public class DaggerAttunementProtection {
 	 * Scans the surrounding area for active Inferno Demonlord attribute displays via ArmorStands
 	 */
 	private static String getNearbyBossAttunement(Player player, Level world) {
-		// var armorStands = world.getEntitiesOfClass(ArmorStand.class, player.getBoundingBox().inflate(24.0));
-		var armorStands = SlayerManager.getEntityArmorStands(entity, 2.5f);
-		for (ArmorStand armorStand : armorStands) {
-			Matcher matcher = BOSS_ATTUNEMENT_PATTERN.matcher(armorStand.getName().getString());
-			if (matcher.find()) {
-				return matcher.group();
+		if (!SlayerManager.isFightingSlayerType(SlayerType.DEMONLORD)) return null;
+
+		ArmorStand armorStand = null;
+
+		if (SlayerManager.isSlayerArmorStandAlive()) {
+			var armorStands = SlayerManager.getEntityArmorStands(SlayerManager.getBossFight().armorStand, 2.5f);
+			for (ArmorStand as : armorStands) {
+				if (as.getName() != null && BOSS_ATTUNEMENT_PATTERN.matcher(as.getName().getString()).find()) {
+					armorStand = as;
+					break;
+				}
 			}
+			player.displayClientMessage(Constants.PREFIX.get().append("Found active attunement!"), false);
+		} else {
+			// search for the closest WitherSkeleton and ZombifiedPiglin, and then for each get the entity armor stands around them, and check for attunement armor stands among those. This is a fallback for the demons phase
+			var witherSkeletons = world.getEntitiesOfClass(WitherSkeleton.class, player.getBoundingBox().inflate(24.0));
+			var piglins = world.getEntitiesOfClass(ZombifiedPiglin.class, player.getBoundingBox().inflate(24.0));
+			armorStand = witherSkeletons.stream()
+					.flatMap(ws -> SlayerManager.getEntityArmorStands(ws, 2.5f).stream())
+					.filter(as -> as.getName() != null && BOSS_ATTUNEMENT_PATTERN.matcher(as.getName().getString()).find())
+					.findFirst()
+					.orElseGet(() -> piglins.stream().flatMap(pg -> SlayerManager.getEntityArmorStands(pg, 2.5f).stream())
+							.filter(as -> as.getName() != null && BOSS_ATTUNEMENT_PATTERN.matcher(as.getName().getString()).find())
+							.findFirst()
+							.orElse(null)); // if no attunement armor stands are found around the demons, fallback to scanning nearby armor stands for attunement (e.g. if the boss armor stand isn't loaded due to spawn protection or something)
+		}
+
+		if (armorStand == null) {
+			player.displayClientMessage(Constants.PREFIX.get().append("Couldn't find boss armor stand"), false);
+			return null;
+		}
+
+		Matcher matcher = BOSS_ATTUNEMENT_PATTERN.matcher(armorStand.getName().getString());
+		if (matcher.find()) {
+			return matcher.group();
 		}
 		return null;
 	}
