@@ -56,7 +56,7 @@ public class DaggerAttunementProtection {
 
 					if (daggerAttunement != null && daggerAttunement.equals(bossAttunement)) {
 						player.displayClientMessage(Constants.PREFIX.get().append("§c[Skyblocker] Blocked attunement switch! Already matching " + daggerAttunement), false);
-						player.playSound(SoundEvents.VILLAGER_NO, 100f, 0.1f);
+						player.playSound(SoundEvents.ANVIL_LAND, 100f, 0.1f);
 						return InteractionResult.FAIL;
 					}
 				}
@@ -96,7 +96,7 @@ public class DaggerAttunementProtection {
 					break;
 				}
 			}
-			player.displayClientMessage(Constants.PREFIX.get().append("Found active attunement!"), false);
+			// player.displayClientMessage(Constants.PREFIX.get().append("Found active attunement!"), false);
 		} else {
 			// search for the closest WitherSkeleton and ZombifiedPiglin, and then for each get the entity armor stands around them, and check for attunement armor stands among those. This is a fallback for the demons phase
 			var witherSkeletons = world.getEntitiesOfClass(WitherSkeleton.class, player.getBoundingBox().inflate(24.0));
@@ -112,7 +112,7 @@ public class DaggerAttunementProtection {
 		}
 
 		if (armorStand == null) {
-			player.displayClientMessage(Constants.PREFIX.get().append("Couldn't find boss armor stand"), false);
+			// player.displayClientMessage(Constants.PREFIX.get().append("Couldn't find boss armor stand"), false);
 			return null;
 		}
 
