@@ -344,6 +344,14 @@ public class SlayersCategory {
 								.controller(ConfigUtils.createBooleanController())
 								.build())
 						.option(Option.<Boolean>createBuilder()
+								.name(Component.translatable("skyblocker.config.slayer.blazeSlayer.blockIncorrectDaggerSwitch"))
+								.description(Component.translatable("skyblocker.config.slayer.blazeSlayer.blockIncorrectDaggerSwitch.@Tooltip"))
+								.binding(defaults.slayers.blazeSlayer.blockIncorrectDaggerSwitch,
+										() -> config.slayers.blazeSlayer.blockIncorrectDaggerSwitch,
+										newValue -> config.slayers.blazeSlayer.blockIncorrectDaggerSwitch = newValue)
+								.controller(ConfigUtils.createBooleanController())
+								.build())
+						.option(Option.<Boolean>createBuilder()
 								.name(Component.translatable("skyblocker.config.slayer.blazeSlayer.muteBlazeSounds"))
 								.description(Component.translatable("skyblocker.config.slayer.blazeSlayer.muteBlazeSounds.@Tooltip"))
 								.tags(CommonTags.ADDED_IN_6_0_0)

@@ -1054,6 +1054,8 @@
   "skyblocker.config.slayer.blazeSlayer": "Blaze Slayer",
   "skyblocker.config.slayer.blazeSlayer.attunementHighlights": "Attunement Highlights",
   "skyblocker.config.slayer.blazeSlayer.attunementHighlights.@Tooltip": "Applies a color matching the current attunement to the selected effect.",
+  "skyblocker.config.slayer.blazeSlayer.blockIncorrectDaggerSwitch": "Block Incorrect Dagger Switch",
+  "skyblocker.config.slayer.blazeSlayer.blockIncorrectDaggerSwitch.@Tooltip": "Prevents switching to a dagger that doesn't match the current attunement.",
   "skyblocker.config.slayer.blazeSlayer.enableFirePillarAnnouncer": "Fire Pillar Countdown Notifications",
   "skyblocker.config.slayer.blazeSlayer.enableFirePillarAnnouncer.@Tooltip": "Countdowns the last five seconds before the Fire Pillar explodes. Configure 'Title Container' to customise the location on the HUD (Note: This only uses a rudimentary distance check, so the Pillar may be spawned by another player's slayer).",
   "skyblocker.config.slayer.blazeSlayer.enableFirePillarAnnouncer.mode.OFF": "Off",

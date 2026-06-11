@@ -114,6 +114,8 @@ public class SlayersConfig {
 
 		public ChatFilterResult hideHellionShield = ChatFilterResult.PASS;
 
+		public boolean blockIncorrectDaggerSwitch = false;
+
 		public enum FirePillar {
 			@EnumDisabledValue
 			OFF,
