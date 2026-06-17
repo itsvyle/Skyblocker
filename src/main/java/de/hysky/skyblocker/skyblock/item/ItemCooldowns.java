@@ -29,6 +29,14 @@ public class ItemCooldowns {
 	private static final String LIVID_DAGGER_ID = "LIVID_DAGGER";
 	private static final String INK_WAND_ID = "INK_WAND";
 
+	private static final String TACTICAL_INSERTION_ID = "TACTICAL_INSERTION"; // 20s
+	private static final String RAGNAROCK_AXE_ID = "RAGNAROCK_AXE"; // 20s
+	private static final String WAND_OF_ATONEMENT_ID = "WAND_OF_ATONEMENT"; // 7s
+	private static final String SOS_FLARE_ID = "SOS_FLARE"; // 3m
+	private static final String ATOMSPLIT_KATANA_ID = "ATOMSPLIT_KATANA"; // 4s
+	private static final String ICE_SPRAY_WAND_ID = "ICE_SPRAY_WAND"; // 5s
+
+
 	private static final List<String> BAT_ARMOR_IDS = List.of("BAT_PERSON_HELMET", "BAT_PERSON_CHESTPLATE", "BAT_PERSON_LEGGINGS", "BAT_PERSON_BOOTS");
 	private static final Map<String, CooldownEntry> ITEM_COOLDOWNS = new HashMap<>();
 
@@ -49,6 +57,13 @@ public class ItemCooldowns {
 			case SHADOW_FURY_ID -> handleItemCooldown(SHADOW_FURY_ID, 15000);
 			case INK_WAND_ID, GIANTS_SWORD_ID -> handleItemCooldown(usedItemId, 30000);
 			case GREAT_SPOOK_STAFF_ID -> handleItemCooldown(GREAT_SPOOK_STAFF_ID, 60000);
+			// Custom items
+			case TACTICAL_INSERTION_ID -> handleItemCooldown(TACTICAL_INSERTION_ID, 20000);
+			case RAGNAROCK_AXE_ID -> handleItemCooldown(RAGNAROCK_AXE_ID, 20000);
+			case WAND_OF_ATONEMENT_ID -> handleItemCooldown(WAND_OF_ATONEMENT_ID, 7000);
+			case SOS_FLARE_ID -> handleItemCooldown(SOS_FLARE_ID, 180000);
+			case ATOMSPLIT_KATANA_ID -> handleItemCooldown(ATOMSPLIT_KATANA_ID, 4000);
+			case ICE_SPRAY_WAND_ID -> handleItemCooldown(ICE_SPRAY_WAND_ID, 5000);
 			// Handle any unlisted items if necessary
 			default -> {}
 		}
