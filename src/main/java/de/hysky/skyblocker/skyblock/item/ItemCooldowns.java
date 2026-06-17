@@ -72,7 +72,7 @@ public class ItemCooldowns {
 
 	// Method to handle item cooldowns with optional condition
 	private static void handleItemCooldown(String itemId, int cooldownTime, boolean additionalCondition) {
-		if (!isOnCooldown(itemId) && additionalCondition) {
+		if ((!isOnCooldown(itemId) && additionalCondition) || itemId.equals(SOS_FLARE_ID)) {
 			ITEM_COOLDOWNS.put(itemId, new CooldownEntry(cooldownTime));
 		}
 	}
