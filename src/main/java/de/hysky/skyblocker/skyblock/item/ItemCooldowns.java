@@ -35,6 +35,8 @@ public class ItemCooldowns {
 	private static final String SOS_FLARE_ID = "SOS_FLARE"; // 3m
 	private static final String ATOMSPLIT_KATANA_ID = "ATOMSPLIT_KATANA"; // 4s
 	private static final String ICE_SPRAY_WAND_ID = "ICE_SPRAY_WAND"; // 5s
+	private static final String SWORD_OF_BAD_HEALTH = "SWORD_OF_BAD_HEALTH"; // 5s
+
 
 
 	private static final List<String> BAT_ARMOR_IDS = List.of("BAT_PERSON_HELMET", "BAT_PERSON_CHESTPLATE", "BAT_PERSON_LEGGINGS", "BAT_PERSON_BOOTS");
@@ -64,6 +66,7 @@ public class ItemCooldowns {
 			case SOS_FLARE_ID -> handleItemCooldown(SOS_FLARE_ID, 180000);
 			case ATOMSPLIT_KATANA_ID -> handleItemCooldown(ATOMSPLIT_KATANA_ID, 4000);
 			case ICE_SPRAY_WAND_ID -> handleItemCooldown(ICE_SPRAY_WAND_ID, 5000);
+			case SWORD_OF_BAD_HEALTH -> handleItemCooldown(SWORD_OF_BAD_HEALTH, 5000);
 			// Handle any unlisted items if necessary
 			default -> {}
 		}
